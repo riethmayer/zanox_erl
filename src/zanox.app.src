@@ -4,13 +4,16 @@
 %% See LICENSE for licensing information.
 {application,
  zanox,[
-           {description, ""},
-           {vsn, "0.1.0"},
-           {registered, []},
-           {applications, [
-                           kernel,
-                           stdlib
-                          ]},
-           {mod, { zanox_app_sup, []}},
-           {env, []}
-          ]}.
+        {description, ""},
+        {vsn, "0.1.0"},
+        {registered, []},
+        {applications, [
+                        kernel,
+                        stdlib,
+                        ssl,
+                        inets,
+                        strftimerl
+                       ]},
+        {mod, { zanox_app_sup, []}},
+        {env, []}
+       ]}.
