@@ -1,7 +1,5 @@
-# @author    Andrzej Sliwa <andrzej.sliwa@i-tool.eu>
-# @since     
-# @copyright 2012 Andrzej Sliwa
-# @doc       Fill in description of project here.
+# @copyright 2012 bonusbox GmbH
+# @doc
 #
 # See LICENSE for licensing information.
 language: erlang
