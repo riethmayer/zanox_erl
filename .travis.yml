@@ -1,0 +1,12 @@
+# @author    Andrzej Sliwa <andrzej.sliwa@i-tool.eu>
+# @since     
+# @copyright 2012 Andrzej Sliwa
+# @doc       Fill in description of project here.
+#
+# See LICENSE for licensing information.
+language: erlang
+notifications:
+  recipients:
+    - andrzej.sliwa@i-tool.eu
+otp_release:
+  - R15B

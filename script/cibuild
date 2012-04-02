@@ -1,0 +1,6 @@
+#!/bin/bash
+# @copyright 2012 bonusbox GmbH
+# @doc
+#
+# See LICENSE for licensing information.
+make test

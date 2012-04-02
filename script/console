@@ -1,0 +1,6 @@
+#!/bin/bash
+# @copyright 2012 bonusbox GmbH
+# @doc
+#
+# See LICENSE for licensing information.
+erl -pa ebin -pa apps/*/ebin -pa deps/*/ebin -name term@127.0.0.1
