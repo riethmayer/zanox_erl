@@ -6,5 +6,6 @@ language: erlang
 notifications:
   recipients:
     - andrzej.sliwa@i-tool.eu
+    - jan@bonusbox.me
 otp_release:
   - R15B
