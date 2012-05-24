@@ -6,6 +6,7 @@
 
 %% Interface exports
 -export([request/3]).
+-export([request/4]).
 -export([timestamp/0]).
 
 %% exports needed to mocking... I dont have any idea how makes this better
@@ -28,28 +29,35 @@
 %% | INTERFACE FUNCTIONS                                             |
 %% +-----------------------------------------------------------------+
 
--spec request(Method :: string(), ConnectId :: string(), SecretKey :: string())
+
+-spec request(Method :: string(), Params :: [tuple()], ConnectId :: string(), SecretKey :: string())
              -> term().
-request(Method, ConnectId, SecretKey) ->
+request(Method, Params, ConnectId, SecretKey) ->
     NormalizedMethod = string:to_lower(Method),
     Nonce = zanox_utils:nonce(),
     Timestamp = zanox_utils:timestamp(),
-    QueryParams = [
-                   {"connectid", ConnectId},
-                   {"currency", "EUR"},
-                   {"date", Timestamp},
-                   {"nonce", Nonce},
-                   {"signature", zanox_utils:request_signature(
-                                   SecretKey,
-                                   NormalizedMethod,
-                                   Timestamp,
-                                   Nonce)}
-                  ],
+    QueryParams = lists:append([
+                                {"connectid", ConnectId},
+                                {"currency", "EUR"},
+                                {"date", Timestamp},
+                                {"nonce", Nonce},
+                                {"signature", zanox_utils:request_signature(
+                                                SecretKey,
+                                                NormalizedMethod,
+                                                Timestamp,
+                                                Nonce)}
+                               ], Params),
     {ok,{{"HTTP/1.1",200,"OK"}, _, Response }} =
         zanox_utils:http_get_request(
           NormalizedMethod ++ "?" ++
               zanox_utils:url_encode(QueryParams)),
     Response.
+
+-spec request(Method :: string(), ConnectId :: string(), SecretKey :: string())
+             -> term().
+request(Method, ConnectId, SecretKey) ->
+    request(Method, [], ConnectId, SecretKey).
+
 
 -spec timestamp() -> string().
 %% returns today date in proper format
