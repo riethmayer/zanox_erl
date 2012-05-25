@@ -9,6 +9,7 @@
 -export([start_link/0]).
 -export([set_credentials/2]).
 -export([request/1]).
+-export([request/2]).
 
 %% Callbacks exports
 -export([init/1]).
@@ -48,6 +49,11 @@ set_credentials(ConnectId, SecretKey) ->
 request(Method) ->
     {ok, Response} = gen_server:call(?SERVER, {request, Method}),
     Response.
+
+-spec request(Method :: string(), Params :: [tuple()]) -> term().
+request(Method, Params) ->
+    {ok, Response} = gen_server:call(?SERVER, {request, Method, Params}),
+    Response.
 %% +-----------------------------------------------------------------+
 %% | GEN_SERVER CALLBACKS                                            |
 %% +-----------------------------------------------------------------+
@@ -64,6 +70,11 @@ handle_call({request, Method}, _From, State) ->
     ConnectId = State#state.connect_id,
     SecretKey = State#state.secret_key,
     Response = zanox_utils:request(Method, ConnectId, SecretKey),
+    {reply, {ok, Response}, State};
+handle_call({request, Method, Params}, _From, State) ->
+    ConnectId = State#state.connect_id,
+    SecretKey = State#state.secret_key,
+    Response = zanox_utils:request(Method, Params, ConnectId, SecretKey),
     {reply, {ok, Response}, State};
 handle_call({set_credentials, Options}, _From, State) ->
     ConnectId = proplists:get_value(connect_id, Options),

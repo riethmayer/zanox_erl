@@ -9,6 +9,7 @@
 %% Interface exports - SUPERVISOR
 -export([start_link/0]).
 -export([get_sales/1]).
+-export([get_program_applications/1]).
 -export([set_credentials/2]).
 
 %% Callbacks exports - APPLICATION
@@ -37,6 +38,11 @@ start_link() ->
 %% get sales for specific date ex."2012-03-26"
 get_sales(Date) ->
     zanox_gen_srv:request("/reports/sales/date/" ++ Date).
+
+get_program_applications(Page) ->
+    zanox_gen_srv:request("/programapplications",
+                          [{"page", integer_to_list(Page)},
+                           {"status", "confirmed"}]).
 
 -spec set_credentials(ConnectId :: string(), SecretKey :: string())
                      -> {ok, Options :: list()}.
