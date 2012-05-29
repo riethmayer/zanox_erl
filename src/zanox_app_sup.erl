@@ -11,6 +11,7 @@
 -export([get_sales/1]).
 -export([get_program_applications/1]).
 -export([set_credentials/2]).
+-export([get_products/2]).
 
 %% Callbacks exports - APPLICATION
 -export([start/2]).
@@ -43,6 +44,11 @@ get_program_applications(Page) ->
     zanox_gen_srv:request("/programapplications",
                           [{"page", integer_to_list(Page)},
                            {"status", "confirmed"}]).
+
+get_products(ProgramId, Page) ->
+    zanox_gen_srv:request("/products",
+                          [{"page", integer_to_list(Page)}
+                          ]).
 
 -spec set_credentials(ConnectId :: string(), SecretKey :: string())
                      -> {ok, Options :: list()}.
