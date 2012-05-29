@@ -38,17 +38,16 @@ start_link() ->
 -spec get_sales(Date :: string()) -> term().
 %% get sales for specific date ex."2012-03-26"
 get_sales(Date) ->
-    zanox_gen_srv:request("/reports/sales/date/" ++ Date).
+    ejson:decode(zanox_gen_srv:request("/reports/sales/date/" ++ Date)).
 
 get_program_applications(Page) ->
-    zanox_gen_srv:request("/programapplications",
+    ejson:decode(zanox_gen_srv:request("/programapplications",
                           [{"page", integer_to_list(Page)},
-                           {"status", "confirmed"}]).
+                           {"status", "confirmed"}])).
 
 get_products(ProgramId, Page) ->
-    zanox_gen_srv:request("/products",
-                          [{"page", integer_to_list(Page)}
-                          ]).
+    ejson:decode(zanox_gen_srv:request("/products",
+                                       [{"page", integer_to_list(Page)}])).
 
 -spec set_credentials(ConnectId :: string(), SecretKey :: string())
                      -> {ok, Options :: list()}.
